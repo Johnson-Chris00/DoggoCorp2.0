@@ -19,7 +19,7 @@ import {
   signinTypographyStyle,
 } from './stylesheets/SignInStyle';
 
-export default function SignIn() {
+export default function SignIn({ signIn }) {
   const [rememberMe, setRememberMe] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -115,7 +115,8 @@ export default function SignIn() {
 
       const username = formData.get('userName');
       const password = formData.get('password');
-
+      const values = { username, password };
+      signIn(values);
       const user = await signInUser(username, password);
       console.log('user log in ', user);
       if (user.error) {
@@ -157,7 +158,7 @@ export default function SignIn() {
   }, []);
 
   return (
-    <div className='login'>
+    <div className="login">
       <ThemeProvider theme={HeaderStyle.theme}>
         <Sky />
         <Footers />
@@ -168,34 +169,34 @@ export default function SignIn() {
           }}
         >
           <Card sx={signinCardStyle}>
-            <Box textAlign='center' mb={2}>
+            <Box textAlign="center" mb={2}>
               <Typography {...signinTypographyStyle}>Sign in</Typography>
             </Box>
 
-            <Box component='form' id='form'>
+            <Box component="form" id="form">
               <TextField
-                label='Username'
-                name='userName'
-                type='username'
+                label="Username"
+                name="userName"
+                type="username"
                 fullWidth
-                margin='normal'
+                margin="normal"
               />
               <TextField
-                label='Password'
-                name='password'
-                type='password'
+                label="Password"
+                name="password"
+                type="password"
                 fullWidth
-                margin='normal'
+                margin="normal"
               />
-              <Box display='flex' alignItems='center' mt={2}>
+              <Box display="flex" alignItems="center" mt={2}>
                 <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-                <Typography variant='body2' color='textSecondary'>
+                <Typography variant="body2" color="textSecondary">
                   &nbsp;&nbsp;Remember me
                 </Typography>
               </Box>
               <Button
-                variant='text'
-                color='primary'
+                variant="text"
+                color="primary"
                 fullWidth
                 mt={2}
                 onClick={handleSignIn}
@@ -204,7 +205,7 @@ export default function SignIn() {
                 Sign In
               </Button>
               {loading && (
-                <LinearProgress color='primary' sx={{ marginTop: 2 }} />
+                <LinearProgress color="primary" sx={{ marginTop: 2 }} />
               )}
               <SnackbarAlert
                 open={snackbarOpen}
@@ -213,20 +214,20 @@ export default function SignIn() {
                 severity={snackbarSeverity}
               />
             </Box>
-            <Box mt={2} textAlign='center'>
-              <Typography variant='body2' color='textSecondary'>
+            <Box mt={2} textAlign="center">
+              <Typography variant="body2" color="textSecondary">
                 Don't have an account?{' '}
                 <Link
                   style={{ cursor: 'pointer' }}
                   onClick={handleSignUpClick}
-                  variant='body2'
+                  variant="body2"
                 >
                   Sign up
                 </Link>
               </Typography>
             </Box>
           </Card>
-          <div id='sign-in-div'></div>
+          <div id="sign-in-div"></div>
         </Box>
       </ThemeProvider>
     </div>
