@@ -51,6 +51,7 @@ dogController.addDog = (req, res, next) => {
 dogController.saveDogPhoto = (req, res, next) => {
   try {
     const imageUrl = res.locals.imageUrl;
+    if (!imageUrl) return next();
     const base64Data = imageUrl.split(',')[1];
     imageBuffer = Buffer.from(base64Data, 'base64');
     const targetDirectory = path.join(__dirname, '../downloadedImages');
@@ -70,6 +71,7 @@ dogController.saveDogPhoto = (req, res, next) => {
 
 dogController.updateDogPhoto = (req, res, next) => {
   const localImageUrl = res.locals.localImageUrl;
+  if (!localImageUrl) return next();
   return pool
     .query('UPDATE dogs SET photo = $1 WHERE dog_id =$2 RETURNING *', [
       localImageUrl,
@@ -130,10 +132,6 @@ dogController.deleteDog = (req, res, next) => {
 
 dogController.fetchDogs = async (req, res, next) => {
   console.log('fetchDogs started');
-  // const userId = req.body.ssid;
-  // const role = req.body.role;
-  // const dogs = [];
-  //query text
   const user_id = req.params.userId;
   try {
     // if (role === 'owner') {

@@ -34,8 +34,9 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => err);
   };
 
-  const createUser = (newUser) =>
-    fetch(`http://localhost:3000/signup`, {
+  const createUser = (newUser) => {
+    console.log('in authorization.js, new user is ', newUser);
+    return fetch(`http://localhost:3000/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));
+  };
 
   const logout = () => {
     setUser(null);

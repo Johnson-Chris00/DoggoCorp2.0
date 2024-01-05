@@ -14,6 +14,7 @@ router.post(
   // sessionController.startSession,
   // cookieController.setSSIDCookie,
   (req, res) => {
+    console.log(res.locals.newUser);
     res.status(200).json(res.locals.newUser);
     if (res.locals.session) {
       console.log('Signed up successfully!');
